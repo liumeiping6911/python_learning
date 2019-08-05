@@ -1,0 +1,59 @@
+dir()
+如果要获得一个对象的所有属性和方法，可以使用 dir() 函数，它返回一个包含字符串的list，比如，获得一个str对 象的所有属性和方法：
+
+
+>>> dir('ABC')
+['__add__', '__class__', '__contains__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'capitalize', 'casefold', 'center', 'count', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'format_map', 'index', 'isalnum', 'isalpha', 'isascii', 'isdecimal', 'isdigit', 'isidentifier', 'islower', 'isnumeric', 'isprintable', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'maketrans', 'partition', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
+
+>>> len('ABC')
+3
+等于
+>>> 'ABC'.__len__()
+3
+
+
+仅仅把属性和方法列出来是不够的，配合 getattr() 、 setattr() 以及 hasattr() ，我们可以直接操作一个对象的 状态：
+
+如果试图获取不存在的属性，会抛出AttributeError的错误：
+>>> getattr('ABC','__len_')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'str' object has no attribute '__len_'
+
+
+可以传入一个default参数，如果属性不存在，就返回默认值：
+>>> getattr('ABC','__len_','404')
+'404'
+
+可以获得对象的方法，这段有点复杂，后续再理解
+
+>>> hasattr(obj, 'power') # 有属性'power'吗？ True >>> getattr(obj, 'power') # 获取属性'power' <bound method MyObject.power of <__main__.MyObject object at 0x108ca35d0>> >>> fn = getattr(obj, 'power') # 获取属性'power'并赋值到变量fn >>> fn # fn指向obj.power <bound method MyObject.power of <__main__.MyObject object at 0x108ca35d0>> >>> fn() # 调用fn()与调用obj.power()是一样的 81
+
+要注意的是，只有在不知 道对象信息的时候，我们才会去获取对象信息。如果可以直接写，就不用获取对象信息。
+假设我们希望从文件流fp中读取图像，我们首先要判断该fp对象是否存在read方法，如果存在，则该对象是一个 流，如果不存在，则无法读取。 hasattr() 就派上了用场。
+请注意，在Python这类动态语言中，有 read() 方法，不代表该fp对象就是一个文件流，它也可能是网络流，也可能 是内存中的一个字节流，但只要 read() 方法返回的是有效的图像数据，就不影响读取图像的功能。
+
+
+
+help() 
+函数用于查看函数或模块用途的详细说明。
+>>> help('os')
+Help on module os:
+
+NAME
+    os - OS routines for NT or Posix depending on what system we're on.
+
+DESCRIPTION
+    This exports:
+      - all functions from posix or nt, e.g. unlink, stat, etc.
+      - os.path is either posixpath or ntpath
+      - os.name is either 'posix' or 'nt'
+      - os.curdir is a string representing the current directory (always '.')
+      - os.pardir is a string representing the parent directory (always '..')
+      - os.sep is the (or a most common) pathname separator ('/' or '\\')
+      - os.extsep is the extension separator (always '.')
+      - os.altsep is the alternate pathname separator (None or '/')
+
+……
+FILE
+    c:\users\liume\appdata\local\continuum\anaconda3\lib\os.py
