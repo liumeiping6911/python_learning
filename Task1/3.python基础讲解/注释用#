@@ -1,0 +1,5 @@
+在Python中，注释用#号标识。井号后面的内容都会被Python解释器忽略
+如果程序太简单，实在没有什么需要说明的，就在程序文件开头加上你的姓名和当前日 期，再用一句话阐述程序的功能。
+
+
+Python之禅  ----Beautiful is better than ugly. Simple is better than complex.
